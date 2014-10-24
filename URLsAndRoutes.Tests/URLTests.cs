@@ -62,5 +62,36 @@ namespace URLsAndRoutes.Tests
             return result;
         }
 
+        private void TestRouteFail(string url)
+        {
+            RouteCollection routes = new RouteCollection();
+            RouteConfig.RegisterRoutes(routes);
+
+            RouteData result = routes.GetRouteData(createHttpContent(url));
+
+            Assert.IsTrue(result == null || result.Route == null);
+        }
+
+        [TestMethod]
+        public void TestIncommingRoutes()
+        {
+            TestRouteMatch("~/Admin/Index", "Admin", "Index");
+
+            TestRouteMatch("~/One/Two", "One", "Two");
+
+            TestRouteFail("~/Admin/Index/Segment");
+
+            TestRouteFail("~/Admin");
+        }
+
+        [TestMethod]
+        public void TestIncommingRoutesExtended()
+        {
+            TestRouteMatch("~/", "Home", "Index");
+            TestRouteMatch("~/Customer", "Customer", "Index");
+            TestRouteMatch("~/Customer/List", "Customer", "List");
+            TestRouteFail("~/Customer/List/All");
+        }
+
     }
 }

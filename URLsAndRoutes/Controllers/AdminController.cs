@@ -16,5 +16,11 @@ namespace URLsAndRoutes.Controllers
 
             return View("ActionName");
         }
+
+        [Route("Users/Add/{user}/{password}"]
+        public string ChangePass(string user, string password){
+            return string.Format("ChangePass ");
+        }
+
     }
 }
